@@ -131,7 +131,8 @@ def logout_action():
 def home_page(pokemon_id=1):
     # update pass relevant data to template
     Pokemons = Pokemon.query.all()
-    return render_template("home.html", Pokemons = Pokemons , pokemon_id = pokemon_id)
+    pokemon = Pokemon.query.filter_by(id = pokemon_id).first()
+    return render_template("home.html", Pokemons = Pokemons , pokemon_id = pokemon_id, poke = pokemon)
 
 # Action Routes (To Update)
 
@@ -159,6 +160,7 @@ def login_action():
 @jwt_required()
 def capture_action(pokemon_id):
   # implement save newly captured pokemon, show a message then reload page
+  print(1)
   return redirect(request.referrer)
 
 @app.route("/rename-pokemon/<int:pokemon_id>", methods=['POST'])
