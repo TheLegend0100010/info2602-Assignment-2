@@ -11,10 +11,11 @@ from flask_jwt_extended import (
     unset_jwt_cookies,
     current_user
 )
-from .models import db, User, UserPokemon, Pokemon
+from models import db, User, UserPokemon, Pokemon
 
 # Configure Flask App
 app = Flask(__name__)
+app.debug = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.root_path, 'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'MySecretKey'
@@ -43,6 +44,13 @@ def user_identity_lookup(user):
 def user_lookup_callback(_jwt_header, jwt_data):
   identity = jwt_data["sub"]
   return User.query.get(identity)
+
+def login_user(username, password):
+  user = User.query.filter_by(username=username).first()
+  if user and user.check_password(password):
+    token = create_access_token(identity=user)
+    return token
+  return None
 
 # *************************************
 
@@ -122,14 +130,30 @@ def logout_action():
 @jwt_required()
 def home_page(pokemon_id=1):
     # update pass relevant data to template
-    return render_template("home.html")
+    Pokemons = Pokemon.query.all()
+    return render_template("home.html", Pokemons = Pokemons)
 
 # Action Routes (To Update)
 
 @app.route("/login", methods=['POST'])
 def login_action():
   # implement login
-  return "Login Action"
+  username = request.form['username']
+  print(username)
+  password = request.form['password']
+  print(password)
+  response = None
+  token = login_user(username, password)
+  print(token)
+  if token:
+    flash('Logged in successfully.')
+    response = redirect(url_for('home_page'))
+    set_access_cookies(response, token)
+  else:
+    flash('Invalid Username/Password')
+    redirect(url_for('login_page'))
+    response = redirect(url_for('login_page'))
+  return response
 
 @app.route("/pokemon/<int:pokemon_id>", methods=['POST'])
 @jwt_required()

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block page %}{% endblock %}
 
@@ -24,16 +24,24 @@
 
 {% block content %}
 <div class="row">
-    <div class="col m3 list-container collection" style="max-height: 88vh;">
+    <!-- <div class="col m3 list-container collection" style="max-height: 88vh;">
   
-    </div>
+    </div> -->
     
     <div class="col m3">
 
+        
             <p class="text-center">Selected Pokemon</p>
 
             <div id="pokemon-detail">
                  <!-- Show pokemon details here -->
+                 <ul>
+                    {%for pokemon in Pokemons%}
+                        <li >
+                            <a class = "collection-item" href="/home/{{pokemon.name}}">{{pokemon.name}}</a>
+                        </li>
+                    {%endfor%}
+                 </ul>
             </div>
 
     </div>

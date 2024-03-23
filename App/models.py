@@ -71,7 +71,7 @@ class User(db.Model):
   #hashes the password parameter and stores it in the object
   def set_password(self, password):
       """Create hashed password."""
-      self.password = generate_password_hash(password, method='sha256')
+      self.password = generate_password_hash(password, method='scrypt')
   
   #Returns true if the parameter is equal to the object’s password property
   def check_password(self, password):
