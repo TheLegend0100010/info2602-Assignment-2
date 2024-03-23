@@ -131,7 +131,7 @@ def logout_action():
 def home_page(pokemon_id=1):
     # update pass relevant data to template
     Pokemons = Pokemon.query.all()
-    return render_template("home.html", Pokemons = Pokemons)
+    return render_template("home.html", Pokemons = Pokemons , pokemon_id = pokemon_id)
 
 # Action Routes (To Update)
 

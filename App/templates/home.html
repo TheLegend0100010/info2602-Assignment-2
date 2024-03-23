@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}Home{% endblock %}
-
+   
 {% block page %}{% endblock %}
 
 {% block link%}
@@ -24,24 +24,27 @@
 
 {% block content %}
 <div class="row">
-    <!-- <div class="col m3 list-container collection" style="max-height: 88vh;">
-  
-    </div> -->
+    <div class="col m3 list-container collection" style="max-height: 88vh;">
+  <ul>
+                    {%for pokemon in Pokemons%}
+                    <li >
+                        {%if pokemon.id == pokemon_id%}
+                        <a id = "poke-{{pokemon.id}}" href="/app/{{pokemon.id}}" class = "active collection-item">{{pokemon.name}}</a>
+                        {%else%}
+                        <a id = "poke-{{pokemon.id}}" href="/app/{{pokemon.id}}" class = "collection-item">{{pokemon.name}}</a>
+                        {%endif%}
+                    </li>
+                    {%endfor%}
+                </ul>
+    </div>
     
     <div class="col m3">
 
-        
             <p class="text-center">Selected Pokemon</p>
 
-            <div id="pokemon-detail">
+            <div id="pokemon-detail" style = "overflow-y: auto; max-height: 100vh; position: fixed; scroll-snap-type: y mandatory;">
                  <!-- Show pokemon details here -->
-                 <ul>
-                    {%for pokemon in Pokemons%}
-                        <li >
-                            <a class = "collection-item" href="/home/{{pokemon.name}}">{{pokemon.name}}</a>
-                        </li>
-                    {%endfor%}
-                 </ul>
+                 
             </div>
 
     </div>
@@ -50,6 +53,8 @@
         <p class="text-center">Your Pokemon</p>
         <table class="responsive-table" id="pokemon-table">
             <!-- Captured pokemon content here -->
+            
+        
             <thead>
                 <tr>
                     <th>Pokemon</th>
