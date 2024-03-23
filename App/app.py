@@ -132,7 +132,7 @@ def home_page(pokemon_id=1):
     # update pass relevant data to template
     Pokemons = Pokemon.query.all()
     pokemon = Pokemon.query.filter_by(id = pokemon_id).first()
-    return render_template("home.html", Pokemons = Pokemons , pokemon_id = pokemon_id, poke = pokemon)
+    return render_template("home.html", Pokemons = Pokemons , pokemon_id = pokemon_id, poke = pokemon, current_user = current_user)
 
 # Action Routes (To Update)
 
@@ -160,18 +160,31 @@ def login_action():
 @jwt_required()
 def capture_action(pokemon_id):
   # implement save newly captured pokemon, show a message then reload page
-  print(1)
+  data = request.form
+  print(pokemon_id)
+  print(current_user.pokemon)
+  current_user.catch_pokemon(pokemon_id, data['pokemon_name'])
+  print(current_user.pokemon)
+  flash("Pokemon Captured")
   return redirect(request.referrer)
 
 @app.route("/rename-pokemon/<int:pokemon_id>", methods=['POST'])
 @jwt_required()
 def rename_action(pokemon_id):
   # implement rename pokemon, show a message then reload page
+  data = request.form
+  print(data)
+  current_user.rename_pokemon(pokemon_id, data['pokemon_name'])
   return redirect(request.referrer)
 
 @app.route("/release-pokemon/<int:pokemon_id>", methods=['GET'])
 @jwt_required()
 def release_action(pokemon_id):
+  data = request.form
+  print(data)
+  print(current_user.pokemon)
+  current_user.release_pokemon(pokemon_id)
+  print(current_user.pokemon)
   # implement release pokemon, show a message then reload page
   return redirect(request.referrer)
 

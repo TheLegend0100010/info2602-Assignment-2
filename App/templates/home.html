@@ -83,6 +83,29 @@
             </thead>
             <tbody>
               <!-- show captured pokemon here with controls to rename and release for each pokemon -->
+            {%for userpokemon in current_user.pokemon%}
+            <tr id = "{{userpokemon.name}}-row">
+                <td>{{userpokemon.pokemon.name}}</td>
+                <td>{{userpokemon.name}}</td>
+                <td>
+                    <form method="POST", style="padding:1em" action="/rename-pokemon/{{userpokemon.id}}">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="Enter a name" id="{{userpokemon.name}}_new-name" name="pokemon_name" type="text" class="validate">
+                            </div>
+                            <div class="col s4 card-action">
+                                <input id = "rename-{{userpokemon.name}}"  type="submit" class="red text-white btn" value="RENAME">
+                            </div>
+                        </div>
+                    </form>
+                    <form method = "GET" action="/release-pokemon/{{userpokemon.id}}">
+                        <div class="col s4 card-action">
+                            <input id = "release-{{userpokemon.name}}" type="submit"  class="red text-white btn" value="RELEASE">
+                          </div>
+                    </form>
+                </td>
+            </tr>
+            {%endfor%}
             </tbody>
         </table>
     </div>
