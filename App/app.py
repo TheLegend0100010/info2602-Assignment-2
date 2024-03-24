@@ -161,6 +161,9 @@ def login_action():
 def capture_action(pokemon_id):
   # implement save newly captured pokemon, show a message then reload page
   data = request.form
+  print(data['pokemon_name'])
+  #what = request.json
+  #print(what)
   print(pokemon_id)
   print(current_user.pokemon)
   current_user.catch_pokemon(pokemon_id, data['pokemon_name'])
@@ -174,7 +177,8 @@ def rename_action(pokemon_id):
   # implement rename pokemon, show a message then reload page
   data = request.form
   print(data)
-  current_user.rename_pokemon(pokemon_id, data['pokemon_name'])
+  current_user.rename_pokemon(pokemon_id, data['pokemon_name:'])
+  flash('Pokemon Renamed')
   return redirect(request.referrer)
 
 @app.route("/release-pokemon/<int:pokemon_id>", methods=['GET'])

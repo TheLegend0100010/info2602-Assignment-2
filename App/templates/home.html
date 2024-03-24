@@ -51,7 +51,7 @@
                     <p>Type2: {{poke.type2}}</p>
                     <p>Weight: {{poke.weight}}</p>
                     <p>Height: {{poke.height}}</p>
-                    <form id="pokemon_name" method="POST", style="padding:1em" action="/pokemon/{{pokemon_id}}">
+                    <form method="POST", style="padding:1em" action="/pokemon/{{pokemon_id}}">
                         <div class="row">
                             <div class="input-field col s12">
                                 <input placeholder="Enter a name" id="pokemon_name" name="pokemon_name" type="text" class="validate">
@@ -91,9 +91,10 @@
                     <form method="POST", style="padding:1em" action="/rename-pokemon/{{userpokemon.id}}">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input placeholder="Enter a name" id="{{userpokemon.name}}_new-name" name="pokemon_name" type="text" class="validate">
+                                <input placeholder="Enter a name" id="{{userpokemon.name}}_new-name" name="pokemon_name:" type="text" class="validate">
                             </div>
                             <div class="col s4 card-action">
+                                <!-- <a href=""></a> -->
                                 <input id = "rename-{{userpokemon.name}}"  type="submit" class="red text-white btn" value="RENAME">
                             </div>
                         </div>
