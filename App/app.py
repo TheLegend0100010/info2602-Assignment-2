@@ -140,12 +140,12 @@ def home_page(pokemon_id=1):
 def login_action():
   # implement login
   username = request.form['username']
-  print(username)
+  
   password = request.form['password']
-  print(password)
+  
   response = None
   token = login_user(username, password)
-  print(token)
+  
   if token:
     flash('Logged in successfully.')
     response = redirect(url_for('home_page'))
@@ -161,13 +161,9 @@ def login_action():
 def capture_action(pokemon_id):
   # implement save newly captured pokemon, show a message then reload page
   data = request.form
-  print(data['pokemon_name'])
-  #what = request.json
-  #print(what)
-  print(pokemon_id)
-  print(current_user.pokemon)
+  
   current_user.catch_pokemon(pokemon_id, data['pokemon_name'])
-  print(current_user.pokemon)
+  
   flash("Pokemon Captured")
   return redirect(request.referrer)
 
@@ -176,7 +172,6 @@ def capture_action(pokemon_id):
 def rename_action(pokemon_id):
   # implement rename pokemon, show a message then reload page
   data = request.form
-  print(data)
   current_user.rename_pokemon(pokemon_id, data['pokemon_name:'])
   flash('Pokemon Renamed')
   return redirect(request.referrer)
@@ -185,10 +180,7 @@ def rename_action(pokemon_id):
 @jwt_required()
 def release_action(pokemon_id):
   data = request.form
-  print(data)
-  print(current_user.pokemon)
   current_user.release_pokemon(pokemon_id)
-  print(current_user.pokemon)
   # implement release pokemon, show a message then reload page
   return redirect(request.referrer)
 
